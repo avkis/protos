@@ -7,5 +7,5 @@ git push origin v0.0.1
 
 ### Generate GO code from proto files
 ````bash
-make generate_go
+make gen_sso_go
 ````

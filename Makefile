@@ -1,7 +1,7 @@
-.DEFAULT_GOAL := generate_go
+.DEFAULT_GOAL := gen_sso_go
 
-## generate: generates GO code from protobuf files
-generate_go:
+## gen_sso_go: generates GO code for SSO service from protobuf files
+gen_sso_go:
 	@echo "Generating protobuf files"
 	protoc -I proto proto/sso/*.proto \
 	--go_out=./gen/go/ \
