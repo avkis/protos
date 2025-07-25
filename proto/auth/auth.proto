@@ -11,8 +11,6 @@ service Auth {
   // Login logs in a user and returns an auth token.
   rpc Login (LoginRequest) returns (LoginResponse);
   rpc Logout (LogoutRequest) returns (LogoutResponse);
-  // IsAdmin checks whether a user is an admin.
-  rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
 }
 
 message RegisterRequest {
@@ -40,12 +38,4 @@ message LogoutRequest {
 
 message LogoutResponse {
   bool success = 1; // Indicates whether the logout was successful.
-}
-
-message IsAdminRequest {
-  string user_id = 1; // User ID to validate.
-}
-
-message IsAdminResponse {
-  bool is_admin = 1;  // Indicates whether the user is an admin.
 }
