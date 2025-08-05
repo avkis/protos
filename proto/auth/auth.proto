@@ -1,8 +1,15 @@
+// [START declaration]
 syntax = "proto3";
 
-package auth;
+package protubuf.v1;
 
-option go_package = "protobuf/auth;auth_v1";
+import "google/protobuf/timestamp.proto";
+// [END declaration]
+
+// [START go_declaration]
+option go_package = "github.com/avkis/protos/gen/go/auth;auth_v1";
+// [END go_declaration]
+
 
 // Auth is service for managing permissions and roles.
 service Auth {
@@ -11,8 +18,17 @@ service Auth {
   // Login logs in a user and returns an auth token.
   rpc Login (LoginRequest) returns (LoginResponse);
   rpc Logout (LogoutRequest) returns (LogoutResponse);
+  rpc Activate(ActivateRequest) returns (ActivateResponse);
+  rpc Refresh (RefreshRequest) returns (RefreshResponse);
+  rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc UserById (UserByIdRequest) returns (User);
+  rpc UserByEmail (UserByEmailRequest) returns (User);
+  rpc UpdateUser (UpdateUserRequest) returns (User);
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+  rpc Users (UsersRequest) returns (stream UsersResponse);
 }
 
+// [START messages]
 message RegisterRequest {
   string email = 1; // Email of the user to register.
   string password = 2; // Password of the user to register.
@@ -29,13 +45,82 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  string token = 1; // Auth token of the logged in user.
+  string access_token = 1; // Access token of the logged in user.
+  string refresh_token = 2; // Refresh token of the logged in user.
 }
 
 message LogoutRequest {
-  string token = 1; // Auth token of the user to logout.
+  string access_token = 1; // Access token of the user to logout.
 }
 
 message LogoutResponse {
   bool success = 1; // Indicates whether the logout was successful.
 }
+
+message ActivateRequest {
+  string user_id = 1; // User ID of the registered user.
+}
+
+message ActivateResponse {
+  bool success = 1; // Indicates whether the activation was successful.
+}
+
+message RefreshRequest {
+  string refresh_token = 1; // Refresh token of the user to refresh a pair of tokens.
+}
+
+message RefreshResponse {
+  string access_token = 1; // Access token of the logged in user.
+  string refresh_token = 2; // Refresh token of the logged in user.
+}
+
+message ChangePasswordRequest {
+  string email = 1; // Email of the user to register.
+  string password = 2; // Password of the registerd user.
+  string new_password = 3; // Password of the user to set.
+}
+
+message ChangePasswordResponse {
+  bool success = 1; // Indicates whether the changing of the password was successful.
+}
+
+message UserByIdRequest {
+  string user_id = 1; // ID of the registered user.
+}
+
+message UserByEmailRequest {
+  string email = 1; // Email of the registered user.
+}
+
+message User {
+  string user_id = 1; // User ID of the registered user.
+  string email = 2; // Email of the register user.
+  string hashed_password = 3; // Hashed password of the registerd user.
+  bool is_activated = 4; // Is the user activated
+  string activation_link = 5; // A link for activation
+  google.protobuf.Timestamp created_at = 6; // Timestamp of the user creation
+  google.protobuf.Timestamp updated_at = 7; // Timeatamp of the user was updated
+}
+
+message UpdateUserRequest {
+  User user = 1;
+}
+
+message UpdateUserResponse {
+  bool success = 1; // Indicates whether the changing of the user was successful.
+}
+
+message DeleteUserRequest {
+  string user_id = 1; // ID of the user to delete.
+}
+
+message DeleteUserResponse {
+  bool success = 1; // Indicates whether the deleting of the user was successful.
+}
+
+message UsersRequest {}
+
+message UsersResponse {
+  repeated User users = 1; // List of users.
+}
+// [END messages]
