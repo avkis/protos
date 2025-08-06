@@ -1,6 +1,6 @@
-module github.com/avkis/protos
+module github.com/avkis/protos/logger
 
-go 1.21
+go 1.23.4
 
 require (
 	google.golang.org/grpc v1.58.1

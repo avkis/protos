@@ -1,13 +1,13 @@
 // [START declaration]
 syntax = "proto3";
 
-package protubuf.v1;
+package authpb;
 
 import "google/protobuf/timestamp.proto";
 // [END declaration]
 
 // [START go_declaration]
-option go_package = "github.com/avkis/protos/gen/go/auth;auth_v1";
+option go_package = "github.com/avkis/protos/golang/auth";
 // [END go_declaration]
 
 
