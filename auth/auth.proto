@@ -98,8 +98,8 @@ message User {
   string hashed_password = 3; // Hashed password of the registerd user.
   bool is_activated = 4; // Is the user activated
   string activation_link = 5; // A link for activation
-  google.protobuf.Timestamp created_at = 6; // Timestamp of the user creation
-  google.protobuf.Timestamp updated_at = 7; // Timeatamp of the user was updated
+  google.protobuf.Timestamp created_at = 6; // Time when the user's account was created
+  google.protobuf.Timestamp updated_at = 7; // The time when the user's account was last updated
 }
 
 message UpdateUserRequest {
