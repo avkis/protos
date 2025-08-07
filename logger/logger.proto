@@ -18,11 +18,13 @@ service Logger {
 
 // [START messages]
 message RegisterRequest {
-  string message = 1; // Message to register.
+  string name = 1; // Name of the stored data.
+  string data = 2; // Data to register.
 }
 
 message RegisterResponse {
   bool success = 1; // Indicates whether registering the message was successful.
+  string message = 2; // Description
 }
 
 // [END messages]
