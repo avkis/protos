@@ -1,4 +1,4 @@
-module github.com/avkis/protos/auth
+module github.com/avkis/protos/golang/auth
 
 go 1.23.4
 

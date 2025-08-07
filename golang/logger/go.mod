@@ -1,4 +1,4 @@
-module github.com/avkis/protos/logger
+module github.com/avkis/protos/golang/logger
 
 go 1.23.4
 
