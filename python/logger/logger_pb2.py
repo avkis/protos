@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0clogger.proto\x12\x08loggerpb\"-\n\x0fRegisterRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\t\"4\n\x10RegisterResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t2K\n\x06Logger\x12\x41\n\x08Register\x12\x19.loggerpb.RegisterRequest\x1a\x1a.loggerpb.RegisterResponseB\'Z%github.com/avkis/protos/golang/loggerb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0clogger.proto\x12\x08loggerpb\"!\n\x03Log\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\t\"-\n\nLogRequest\x12\x1f\n\x08logEntry\x18\x01 \x01(\x0b\x32\r.loggerpb.Log\"\x1d\n\x0bLogResponse\x12\x0e\n\x06result\x18\x01 \x01(\t2E\n\nLogService\x12\x37\n\x08WriteLog\x12\x14.loggerpb.LogRequest\x1a\x15.loggerpb.LogResponseB\'Z%github.com/avkis/protos/golang/loggerb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,10 +32,12 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'logger_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z%github.com/avkis/protos/golang/logger'
-  _globals['_REGISTERREQUEST']._serialized_start=26
-  _globals['_REGISTERREQUEST']._serialized_end=71
-  _globals['_REGISTERRESPONSE']._serialized_start=73
-  _globals['_REGISTERRESPONSE']._serialized_end=125
-  _globals['_LOGGER']._serialized_start=127
-  _globals['_LOGGER']._serialized_end=202
+  _globals['_LOG']._serialized_start=26
+  _globals['_LOG']._serialized_end=59
+  _globals['_LOGREQUEST']._serialized_start=61
+  _globals['_LOGREQUEST']._serialized_end=106
+  _globals['_LOGRESPONSE']._serialized_start=108
+  _globals['_LOGRESPONSE']._serialized_end=137
+  _globals['_LOGSERVICE']._serialized_start=139
+  _globals['_LOGSERVICE']._serialized_end=208
 # @@protoc_insertion_point(module_scope)

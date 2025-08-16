@@ -18,88 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// LoggerClient is the client API for Logger service.
+// LogServiceClient is the client API for LogService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type LoggerClient interface {
-	// Register registers a new user.
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+type LogServiceClient interface {
+	WriteLog(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*LogResponse, error)
 }
 
-type loggerClient struct {
+type logServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewLoggerClient(cc grpc.ClientConnInterface) LoggerClient {
-	return &loggerClient{cc}
+func NewLogServiceClient(cc grpc.ClientConnInterface) LogServiceClient {
+	return &logServiceClient{cc}
 }
 
-func (c *loggerClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
-	out := new(RegisterResponse)
-	err := c.cc.Invoke(ctx, "/loggerpb.Logger/Register", in, out, opts...)
+func (c *logServiceClient) WriteLog(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*LogResponse, error) {
+	out := new(LogResponse)
+	err := c.cc.Invoke(ctx, "/loggerpb.LogService/WriteLog", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// LoggerServer is the server API for Logger service.
-// All implementations must embed UnimplementedLoggerServer
+// LogServiceServer is the server API for LogService service.
+// All implementations must embed UnimplementedLogServiceServer
 // for forward compatibility
-type LoggerServer interface {
-	// Register registers a new user.
-	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-	mustEmbedUnimplementedLoggerServer()
+type LogServiceServer interface {
+	WriteLog(context.Context, *LogRequest) (*LogResponse, error)
+	mustEmbedUnimplementedLogServiceServer()
 }
 
-// UnimplementedLoggerServer must be embedded to have forward compatible implementations.
-type UnimplementedLoggerServer struct {
+// UnimplementedLogServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedLogServiceServer struct {
 }
 
-func (UnimplementedLoggerServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+func (UnimplementedLogServiceServer) WriteLog(context.Context, *LogRequest) (*LogResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WriteLog not implemented")
 }
-func (UnimplementedLoggerServer) mustEmbedUnimplementedLoggerServer() {}
+func (UnimplementedLogServiceServer) mustEmbedUnimplementedLogServiceServer() {}
 
-// UnsafeLoggerServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to LoggerServer will
+// UnsafeLogServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to LogServiceServer will
 // result in compilation errors.
-type UnsafeLoggerServer interface {
-	mustEmbedUnimplementedLoggerServer()
+type UnsafeLogServiceServer interface {
+	mustEmbedUnimplementedLogServiceServer()
 }
 
-func RegisterLoggerServer(s grpc.ServiceRegistrar, srv LoggerServer) {
-	s.RegisterService(&Logger_ServiceDesc, srv)
+func RegisterLogServiceServer(s grpc.ServiceRegistrar, srv LogServiceServer) {
+	s.RegisterService(&LogService_ServiceDesc, srv)
 }
 
-func _Logger_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterRequest)
+func _LogService_WriteLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LogRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LoggerServer).Register(ctx, in)
+		return srv.(LogServiceServer).WriteLog(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/loggerpb.Logger/Register",
+		FullMethod: "/loggerpb.LogService/WriteLog",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoggerServer).Register(ctx, req.(*RegisterRequest))
+		return srv.(LogServiceServer).WriteLog(ctx, req.(*LogRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Logger_ServiceDesc is the grpc.ServiceDesc for Logger service.
+// LogService_ServiceDesc is the grpc.ServiceDesc for LogService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Logger_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "loggerpb.Logger",
-	HandlerType: (*LoggerServer)(nil),
+var LogService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "loggerpb.LogService",
+	HandlerType: (*LogServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Register",
-			Handler:    _Logger_Register_Handler,
+			MethodName: "WriteLog",
+			Handler:    _LogService_WriteLog_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

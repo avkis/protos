@@ -25,8 +25,8 @@ if _version_not_supported:
     )
 
 
-class LoggerStub(object):
-    """Logger is service for managing permissions and roles.
+class LogServiceStub(object):
+    """Logger service
     """
 
     def __init__(self, channel):
@@ -35,46 +35,45 @@ class LoggerStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Register = channel.unary_unary(
-                '/loggerpb.Logger/Register',
-                request_serializer=logger__pb2.RegisterRequest.SerializeToString,
-                response_deserializer=logger__pb2.RegisterResponse.FromString,
+        self.WriteLog = channel.unary_unary(
+                '/loggerpb.LogService/WriteLog',
+                request_serializer=logger__pb2.LogRequest.SerializeToString,
+                response_deserializer=logger__pb2.LogResponse.FromString,
                 _registered_method=True)
 
 
-class LoggerServicer(object):
-    """Logger is service for managing permissions and roles.
+class LogServiceServicer(object):
+    """Logger service
     """
 
-    def Register(self, request, context):
-        """Register registers a new user.
-        """
+    def WriteLog(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_LoggerServicer_to_server(servicer, server):
+def add_LogServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Register': grpc.unary_unary_rpc_method_handler(
-                    servicer.Register,
-                    request_deserializer=logger__pb2.RegisterRequest.FromString,
-                    response_serializer=logger__pb2.RegisterResponse.SerializeToString,
+            'WriteLog': grpc.unary_unary_rpc_method_handler(
+                    servicer.WriteLog,
+                    request_deserializer=logger__pb2.LogRequest.FromString,
+                    response_serializer=logger__pb2.LogResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'loggerpb.Logger', rpc_method_handlers)
+            'loggerpb.LogService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('loggerpb.Logger', rpc_method_handlers)
+    server.add_registered_method_handlers('loggerpb.LogService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class Logger(object):
-    """Logger is service for managing permissions and roles.
+class LogService(object):
+    """Logger service
     """
 
     @staticmethod
-    def Register(request,
+    def WriteLog(request,
             target,
             options=(),
             channel_credentials=None,
@@ -87,9 +86,9 @@ class Logger(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/loggerpb.Logger/Register',
-            logger__pb2.RegisterRequest.SerializeToString,
-            logger__pb2.RegisterResponse.FromString,
+            '/loggerpb.LogService/WriteLog',
+            logger__pb2.LogRequest.SerializeToString,
+            logger__pb2.LogResponse.FromString,
             options,
             channel_credentials,
             insecure,

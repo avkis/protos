@@ -10,21 +10,28 @@ option go_package = "github.com/avkis/protos/golang/logger";
 // [END go_declaration]
 
 
-// Logger is service for managing permissions and roles.
-service Logger {
-  // Register registers a new user.
-  rpc Register (RegisterRequest) returns (RegisterResponse);
-}
-
 // [START messages]
-message RegisterRequest {
+message Log {
   string name = 1; // Name of the stored data.
   string data = 2; // Data to register.
 }
 
-message RegisterResponse {
-  bool success = 1; // Indicates whether registering the message was successful.
-  string message = 2; // Description
+message LogRequest {
+    Log logEntry = 1;
+}
+
+message LogResponse {
+    string result = 1;
+}
+
+// Logger service
+service LogService {
+    rpc WriteLog(LogRequest) returns (LogResponse);
 }
 
 // [END messages]
+
+
+
+
+
